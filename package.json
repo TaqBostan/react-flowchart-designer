@@ -1,0 +1,51 @@
+{
+  "name": "react-flowchart-designer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "author": "TaqBostan",
+  "license": "MIT",
+  "scripts": {
+    "ladle": "ladle serve",
+    "build": "tsup --dts",
+    "test": "jest --verbose"
+  },
+  "devDependencies": {
+    "@ladle/react": "^4.0.2",
+    "@testing-library/jest-dom": "^6.4.8",
+    "@testing-library/react": "^16.0.0",
+    "@testing-library/user-event": "^14.5.2",
+    "@types/jest": "^29.5.12",
+    "@types/react": "^18.2.66",
+    "@types/react-dom": "^18.2.22",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "ts-jest": "^29.2.3",
+    "tsup": "^8.0.2",
+    "typescript": "^5.5.4"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "keywords": [
+    "react",
+    "flowchart",
+    "flowchart-designer",
+    "diagram"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TaqBostan/react-flowchart-designer.git"
+  },
+  "files": [
+    "dist"
+  ],
+  "bugs": {
+    "url": "https://github.com/TaqBostan/react-flowchart-designer/issues"
+  }
+}

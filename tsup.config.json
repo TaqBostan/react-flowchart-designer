@@ -1,0 +1,11 @@
+{
+    "splitting": false,
+    "sourcemap": true,
+    "clean": true,
+    "minify": true,
+    "injectStyle": true,
+    "target": "es2021",
+    "entry": [
+      "src/index.ts", "!src/**/*.stories.tsx"
+    ]
+   }
