@@ -3,7 +3,7 @@ import { Node, ns, Point, Side } from "../../types";
 
 export class RectNode extends Node {
   box: SVGRectElement = document.createElementNS(ns, 'rect') as SVGRectElement;
-  ratio = { h: 0.25, v: 0.1 };
+  ratio = { h: 0.25, v: 0.05 };
   constructor(public id: number, public left: number, public top: number, public text: string, public color: string, public width: number = 0, public height: number = 30) {
     super(id, left, top, text, color, 'rectangle');
   }
