@@ -21,14 +21,14 @@ export default class RhomBuilder extends NodeBuilder<RhomNode> {
     let hx: number, hy: number, side = conn.side as RhomSide, c1 = this.center();
     let distance = Math.sqrt(Math.pow((c2.X - c1.X), 2) + Math.pow((c2.Y - c1.Y), 2));
     if (side.vertical) {
-      hy = Math.sign(c2.Y - c1.Y) * distance * conn.horizon.ratioH;
+      hy = (side.firstSide ? -1 : 1) * distance * conn.horizon.ratioH;
       if (Math.abs(hy) < 30) hy = Math.sign(hy) * 30;
-      hx = - distance * conn.horizon.ratioH * conn.horizon.ratioV;
+      hx = - distance * conn.horizon.ratioV;
     }
     else {
-      hx = Math.sign(c2.X - c1.X) * distance * conn.horizon.ratioH;
+      hx = (side.firstSide ? -1 : 1) * distance * conn.horizon.ratioH;
       if (Math.abs(hx) < 30) hx = Math.sign(hx) * 30;
-      hy = distance * conn.horizon.ratioH * conn.horizon.ratioV;
+      hy = distance * conn.horizon.ratioV;
     }
     conn.horizon.point!.X = p1.X + hx;
     conn.horizon.point!.Y = p1.Y + hy;
@@ -59,13 +59,13 @@ export default class RhomBuilder extends NodeBuilder<RhomNode> {
     let distance = Math.sqrt(Math.pow((c2.X - c1.X), 2) + Math.pow((c2.Y - c1.Y), 2));
     if (side.vertical) {
       if (Math.abs(hy) < 30) hy = Math.sign(hy) * 30;
-      conn.horizon.ratioH = Math.sign(c2.Y - c1.Y) * hy / distance;
-      conn.horizon.ratioV = - hx / distance / conn.horizon.ratioH;
+      conn.horizon.ratioH = (side.firstSide ? -1 : 1) * hy / distance;
+      conn.horizon.ratioV = - hx / distance;
     }
     else {
       if (Math.abs(hx) < 30) hx = Math.sign(hx) * 30;
-      conn.horizon.ratioH = Math.sign(c2.X - c1.X) * hx / distance;
-      conn.horizon.ratioV = hy / distance / conn.horizon.ratioH;
+      conn.horizon.ratioH = (side.firstSide ? -1 : 1) * hx / distance;
+      conn.horizon.ratioV = hy / distance;
     }
   }
 

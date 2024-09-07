@@ -136,7 +136,8 @@ Below is the data model for links:
 - Fork the project.
 - Make changes.
 - Run the project in development mode: `npm run ladle`.
-- Test your changes using `flowchart.stories.tsx` or your own Stories (`*.stories.tsx`).
+- Write your own tests and/or update existing ones in src/flowchart/test dir.
+- Check the new features and changes using `flowchart.stories.tsx` or your own Stories (`*.stories.tsx`).
 - Update README with appropriate docs.
 - Commit and PR
 
