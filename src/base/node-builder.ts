@@ -94,6 +94,7 @@ export default abstract class NodeBuilder<N extends Node> {
       foreign.setAttribute("width", `${input.offsetWidth}`);
     }
     input.onblur = () => {
+      input.onblur = () => {};
       node.text = lbl.innerHTML = input.value;
       lbl.removeAttribute('visibility');
       foreign.remove();
