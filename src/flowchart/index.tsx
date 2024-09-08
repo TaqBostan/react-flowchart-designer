@@ -6,6 +6,7 @@ import { LinkData, NodeData } from '../base/types';
 import { RectNode } from '../base/builders/rect/rect-node';
 import { CircleNode } from '../base/builders/circle/circ-node';
 import { RhomNode } from '../base/builders/rhom/rhom-node';
+import { HexaNode } from '../base/builders/hexa/hexa-node';
 
 const Flowchart = (props: FlowchartProps) => {
   const wrapper = useRef<SVGSVGElement>(null);
@@ -21,13 +22,18 @@ const Flowchart = (props: FlowchartProps) => {
     addRhomNode(left: number, top: number, text: string, id?: number, color: string = "transparent") {
       return getDirector().addNode(new RhomNode(id || 0, left, top, text, color));
     },
+    addHexaNode(left: number, top: number, text: string, id?: number, color: string = "transparent") {
+      return getDirector().addNode(new HexaNode(id || 0, left, top, text, color));
+    },
     addNodes(nodes: NodeData[], links: LinkData[] = []) {
       let rectangles = nodes.filter(n => !n.shape || n.shape === 'rectangle').map(n => new RectNode(n.id || 0, n.X, n.Y, n.text, n.color || "transparent"))
       let circles = nodes.filter(n => n.shape === 'circle').map(n => new CircleNode(n.id || 0, n.X, n.Y, n.text, n.color || "transparent"))
       let rhombuses = nodes.filter(n => n.shape === 'rhombus').map(n => new RhomNode(n.id || 0, n.X, n.Y, n.text, n.color || "transparent"))
+      let hexagons = nodes.filter(n => n.shape === 'hexagon').map(n => new HexaNode(n.id || 0, n.X, n.Y, n.text, n.color || "transparent"))
       getDirector().addNodes(rectangles);
       getDirector().addNodes(circles);
       getDirector().addNodes(rhombuses);
+      getDirector().addNodes(hexagons);
       getDirector().addConns(links);
     },
     getData() {

@@ -49,7 +49,7 @@ export default abstract class NodeBuilder<N extends Node> {
 
   updateNode(n: Node) {
     this.setSize(n);
-    n.label.setAttribute('x', ((n.box as any).getBBox().width / 2 - 1).toString());
+    n.label.setAttribute('x', ((n.box as any).getBBox().width / 2).toString());
     n.label.setAttribute('y', n.labelY(n.label.getBBox().height).toString());
   }
 

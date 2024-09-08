@@ -32,7 +32,7 @@ const { setHandles, flowchart } = useFlowchart();
 ```
 
 ```js
-<button onClick={() => { flowchart.addNode(50, 50, 'my node') }}>Add Node</button>
+<button onClick={() => { flowchart.addRectNode(50, 50, 'my node') }}>Add Node</button>
 <Flowchart setHandles={setHandles} width='700px' height='400px' editable={true} />
 ```
 
