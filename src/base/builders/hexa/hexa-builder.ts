@@ -6,15 +6,6 @@ export default class HexaBuilder extends NodeBuilder<HexaNode> {
   ofType<T>(node: T): boolean {
     return node instanceof HexaNode;
   }
-  nodeProto(): void {
-    let builder = this
-    HexaNode.prototype.setHorizon = function (...params) { builder.setHorizon.apply(this, params) }
-    HexaNode.prototype.updatePoints = function (...params) { builder.updatePoints.apply(this, params) }
-    HexaNode.prototype.arrangeSide = function (...params) { builder.arrangeSide.apply(this, params) }
-    HexaNode.prototype.connSide = function (...params) { return builder.connSide.apply(this, [...params, builder]) }
-    HexaNode.prototype.setPoint = function (...params) { builder.setPoint.apply(this, [...params, builder]) };
-    HexaNode.prototype.setRatio = function (...params) { builder.setRatio.apply(this, params) };
-  }
 
   setHorizon = function (this: HexaNode, conn: Connector, p1: Point, c2: Point): void {
     if (conn.horizon.point === undefined) conn.horizon.point = { X: 0, Y: 0 };

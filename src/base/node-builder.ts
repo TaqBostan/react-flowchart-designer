@@ -1,6 +1,6 @@
 
 import ConnectorBuilder from './connector-builder';
-import { Node, Point, StaticData } from './types'
+import { Connector, Horizon, Node, Point, Side, StaticData } from './types'
 import Util from './util';
 
 export default abstract class NodeBuilder<N extends Node> {
@@ -11,12 +11,27 @@ export default abstract class NodeBuilder<N extends Node> {
   ctr: HTMLElement;
   abstract ofType<T extends Node>(node: T): boolean;
   abstract setSize(n: Node): void;
-  abstract nodeProto(): void;
+  abstract updatePoints(this: N, p1: Point, hrz: Horizon, c2: Point, hrz2: Horizon) : void;
+  abstract setHorizon(this: N, conn: Connector, origin: Point, dest: Point) : void;
+  abstract arrangeSide(this: N, side: Side) : void;
+  abstract connSide(this: N, hrz: Horizon, node2: Node, builder: NodeBuilder<N>): Side;
+  abstract setPoint(this: N, conn: Connector, hrzP: Point, builder: NodeBuilder<N>) : void;
+  abstract setRatio(this: N, conn: Connector) : void;
 
-  constructor(public svg: SVGSVGElement, public connBuilder: ConnectorBuilder, public sd: StaticData) {
+  constructor(public svg: SVGSVGElement, public connBuilder: ConnectorBuilder, public sd: StaticData, nodeType: any) {
     this.nodes = this.connBuilder.nodes;
     this.ctr = this.svg.parentElement!;
-    this.nodeProto();
+    this.assignProto(nodeType);
+  }
+
+  assignProto(nodeType: any) {
+    let builder = this;
+    nodeType.prototype.setHorizon = function (conn: Connector, origin: Point, dest: Point) { builder.setHorizon.apply(this, [conn, origin, dest]) }
+    nodeType.prototype.updatePoints = function (p1: Point, hrz: Horizon, c2: Point, hrz2: Horizon) { builder.updatePoints.apply(this, [p1, hrz, c2, hrz2]) }
+    nodeType.prototype.arrangeSide = function (side: Side) { builder.arrangeSide.apply(this, [side]) }
+    nodeType.prototype.connSide = function (hrz: Horizon, node2: Node) { return builder.connSide.apply(this, [hrz, node2, builder]) }
+    nodeType.prototype.setPoint = function (conn: Connector, hrzP: Point) { builder.setPoint.apply(this, [conn, hrzP, builder]) };
+    nodeType.prototype.setRatio = function (conn: Connector) { builder.setRatio.apply(this, [conn]) };
   }
 
   add(n: Node): Node {

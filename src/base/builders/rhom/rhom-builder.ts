@@ -6,15 +6,6 @@ export default class RhomBuilder extends NodeBuilder<RhomNode> {
   ofType<T>(node: T): boolean {
     return node instanceof RhomNode;
   }
-  nodeProto(): void {
-    let builder = this
-    RhomNode.prototype.setHorizon = function (...params) { builder.setHorizon.apply(this, params) }
-    RhomNode.prototype.updatePoints = function (...params) { builder.updatePoints.apply(this, params) }
-    RhomNode.prototype.arrangeSide = function (...params) { builder.arrangeSide.apply(this, params) }
-    RhomNode.prototype.connSide = function (...params) { return builder.connSide.apply(this, [...params, builder]) }
-    RhomNode.prototype.setPoint = function (...params) { builder.setPoint.apply(this, [...params, builder]) };
-    RhomNode.prototype.setRatio = function (...params) { builder.setRatio.apply(this, params) };
-  }
 
   setHorizon = function (this: RhomNode, conn: Connector, p1: Point, c2: Point): void {
     if (conn.horizon.point === undefined) conn.horizon.point = { X: 0, Y: 0 };

@@ -4,8 +4,12 @@ import RhomBuilder from "./builders/rhom/rhom-builder";
 import HexaBuilder from "./builders/hexa/hexa-builder";
 import ConnectorBuilder from "./connector-builder";
 import NodeBuilder from "./node-builder";
-import { Connector, LinkData, MetaData, Node, Point } from "./types";
+import { Connector, LinkData, MetaData, Node, Point, StaticData } from "./types";
 import Util from "./util";
+import { RectNode } from "./builders/rect/rect-node";
+import { CircleNode } from "./builders/circle/circ-node";
+import { RhomNode } from "./builders/rhom/rhom-node";
+import { HexaNode } from "./builders/hexa/hexa-node";
 
 export default class Director {
   static instance: Director;
@@ -18,7 +22,13 @@ export default class Director {
   constructor(public svg: SVGSVGElement) {
     let parent = svg.parentElement!;
     this.connBuilder = new ConnectorBuilder(svg, this.nodes, Director.sd);
-    this.builders = [new RectBuilder(svg, this.connBuilder, Director.sd), new CircleBuilder(svg, this.connBuilder, Director.sd), new RhomBuilder(svg, this.connBuilder, Director.sd), new HexaBuilder(svg, this.connBuilder, Director.sd)];
+    let params : [SVGSVGElement, ConnectorBuilder, StaticData] = [svg, this.connBuilder, Director.sd]
+    this.builders = [
+      new RectBuilder(...params, RectNode),
+      new CircleBuilder(...params, CircleNode),
+      new RhomBuilder(...params, RhomNode),
+      new HexaBuilder(...params, HexaNode)
+    ];
     parent.onmousedown = (event: MouseEvent) => this.drag_md(event);
     parent.onclick = () => this.parent_c();
     parent.addEventListener('wheel', (e: WheelEvent) => this.mousewheel(e))

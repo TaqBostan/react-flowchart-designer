@@ -8,15 +8,6 @@ export default class RectBuilder extends NodeBuilder<RectNode> {
   ofType<T>(node: T): boolean {
     return node instanceof RectNode;
   }
-  nodeProto(): void {
-    let builder = this;
-    RectNode.prototype.setHorizon = function (...params) { builder.setHorizon.apply(this, params) };
-    RectNode.prototype.updatePoints = function (...params) { builder.updatePoints.apply(this, params) };
-    RectNode.prototype.arrangeSide = function (...params) { builder.arrangeSide.apply(this, params) };
-    RectNode.prototype.connSide = function (...params) { return builder.connSide.apply(this, [...params, builder]) };
-    RectNode.prototype.setPoint = function (...params) { builder.setPoint.apply(this, [...params, builder]) };
-    RectNode.prototype.setRatio = function (...params) { builder.setRatio.apply(this, params) };
-  }
 
   setHorizon = function (this: RectNode, conn: Connector, p1: Point, c2: Point) {
     if (conn.horizon.point === undefined) conn.horizon.point = { X: 0, Y: 0 };

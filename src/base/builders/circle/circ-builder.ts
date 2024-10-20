@@ -7,16 +7,6 @@ export default class CircleBuilder extends NodeBuilder<CircleNode> {
   ofType<T>(node: T): boolean {
     return node instanceof CircleNode;
   }
-  nodeProto(): void {
-    let builder = this
-    CircleNode.prototype.setHorizon = function (...params) { builder.setHorizon.apply(this, params) }
-    CircleNode.prototype.updatePoints = function (...params) { builder.updatePoints.apply(this, params) }
-    CircleNode.prototype.arrangeSide = function (...params) { builder.arrangeSide.apply(this, params) }
-    CircleNode.prototype.connSide = function (...params) { return builder.connSide.apply(this, params) }
-    CircleNode.prototype.setPoint = function (...params) { builder.setPoint.apply(this, params) };
-    CircleNode.prototype.setRatio = function (...params) { builder.setRatio.apply(this, params) };
-
-  }
 
   setHorizon = function (this: CircleNode, conn: Connector, origin: Point, dest: Point): void {
     if (conn.horizon.point !== undefined) return;
@@ -27,6 +17,7 @@ export default class CircleBuilder extends NodeBuilder<CircleNode> {
   }
 
   updatePoints = function (this: CircleNode, p1: Point, hrz: Horizon, c2: Point, hrz2: Horizon) {
+
     let c1 = this.center(), hPoint = hrz.point!, hPoint2 = hrz2.point!, phi: number, sign = c2.X < p1.X ? 1 : -1;
     if (hrz.ratioV === 0) {
       hrz.ratioH = this.ratio.h;
@@ -61,11 +52,11 @@ export default class CircleBuilder extends NodeBuilder<CircleNode> {
     });
   }
 
-  connSide = function (this: CircleNode, hrz: Horizon, node2: Node): CircleSide {
+  connSide = function (this: CircleNode, hrz: Horizon, node2: Node, builder: CircleBuilder): CircleSide {
     return new CircleSide();
   }
 
-  setPoint = function (this: CircleNode, conn: Connector, hrzP: Point) {
+  setPoint = function (this: CircleNode, conn: Connector, hrzP: Point, builder: CircleBuilder) {
     let center = this.center(), phi = Math.atan2(hrzP.Y - center.Y, hrzP.X - center.X), ConnP = conn.point!;
     ConnP.X = center.X + this.radius * Math.cos(phi);
     ConnP.Y = center.Y + this.radius * Math.sin(phi);
